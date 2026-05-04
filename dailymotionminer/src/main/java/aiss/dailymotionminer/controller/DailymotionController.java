@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/dailymotion/channels")
+@RequestMapping("/dailymotionminer/channels")
 public class DailymotionController {
 
     @Autowired
@@ -28,11 +28,11 @@ public class DailymotionController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Value("https://localhost:8080/videominer/channels")
+    @Value("${videominer.uri}")
     private String videoMinerURI;
-    @Value("10")
+    @Value("${dailymotionminer.maxVideos}")
     private Integer defaultMaxVideos;
-    @Value("2")
+    @Value("${dailymotionminer.maxPages}")
     private Integer defaultMaxPages;
 
     @GetMapping("/{id}")
@@ -78,8 +78,10 @@ public class DailymotionController {
 
             Tag dTags = dailymotionService.getTags(dVideo.getId());
             List<Comment> vComments = new ArrayList<>();
+            int index = 0;
             for(String tag: dTags.getTags()) {
-                vComments.add(Transformer.transformComment(tag));
+                vComments.add(Transformer.transformComment(tag, dVideo.getId(), index));
+                index++;
             }
             vVideo.setComments(vComments);
 
