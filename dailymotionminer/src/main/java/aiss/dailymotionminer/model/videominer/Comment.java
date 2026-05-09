@@ -1,6 +1,7 @@
 package aiss.dailymotionminer.model.videominer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,18 +12,22 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "Comment")
+@Schema(description = "Comentario del vídeo (generado a partir de los Tags de Dailymotion)")
 public class Comment {
 
     @Id
     @JsonProperty("id")
+    @Schema(description = "ID generado para el comentario", example = "v123-tag-0")
     private String id;
 
     @JsonProperty("text")
     @Column(columnDefinition="TEXT", name = "text")
+    @Schema(description = "Texto del tag", example = "Música")
     private String text;
 
     @JsonProperty("createdOn")
     @Column(name="createdOn")
+    @Schema(description = "Fecha de creación del comentario")
     private String createdOn;
 
     public String getId() {
