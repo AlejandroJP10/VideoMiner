@@ -7,7 +7,7 @@ import jakarta.persistence.*;
  * @author Juan C. Alonso
  */
 @Entity
-@Table(name = "VMUser")
+@Table(name = "users")
 public class User {
 
     @Id

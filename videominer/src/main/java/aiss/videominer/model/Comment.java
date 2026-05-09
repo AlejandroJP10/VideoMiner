@@ -2,13 +2,14 @@ package aiss.videominer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 /**
  * @author Juan C. Alonso
  */
 @Entity
-@Table(name = "Comment")
+@Table(name = "comments")
 public class Comment {
 
     @Id
@@ -17,10 +18,12 @@ public class Comment {
 
     @JsonProperty("text")
     @Column(columnDefinition="TEXT", name = "text")
+    @NotEmpty(message = "Comment text can not be empty")
     private String text;
 
     @JsonProperty("createdOn")
     @Column(name="createdOn")
+    @NotEmpty(message = "Comment creation date can not be empty")
     private String createdOn;
 
     public String getId() {

@@ -5,12 +5,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 
 /**
  * @author Juan C. Alonso
  */
 @Entity
-@Table(name = "Caption")
+@Table(name = "captions")
 public class Caption {
 
     @Id
@@ -19,10 +20,12 @@ public class Caption {
 
     @Column(name="name")
     @JsonProperty("name")
+    @NotEmpty(message = "Caption name can not be empty")
     private String name;
 
     @Column(name="language")
     @JsonProperty("language")
+    @NotEmpty(message = "Caption language can not be empty")
     private String language;
 
 

@@ -65,39 +65,4 @@ public class ChannelController {
         return channelRepository.save(channel);
     }
 
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Canal actualizado",
-                    content = {@Content(schema = @Schema())}),
-            @ApiResponse(responseCode = "404", description = "Canal no encontrado", content = {@Content(schema = @Schema())}),
-            @ApiResponse(responseCode = "400", description = "Datos inválidos", content = {@Content(schema = @Schema())})
-    })
-    @Operation(summary = "Update a Channel", description = "Update a Channel object by specifying its Id", tags = {"channels", "put"})
-    @PutMapping("/channels/{channelId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateChannel(@Parameter(description = "data of channel to be updated") @RequestBody @Valid Channel channel,
-                              @Parameter(description = "id of channel to be updated") @PathVariable("channelId") String channelId) throws ChannelNotFoundException {
-        Optional<Channel> channelData = channelRepository.findById(channelId);
-        if(!channelData.isPresent()){
-            throw new ChannelNotFoundException();
-        }
-        Channel newChannel = channelData.get();
-        newChannel.setName(channel.getName());
-        newChannel.setDescription(channel.getDescription());
-        newChannel.setCreatedTime(channel.getCreatedTime());
-        newChannel.setVideos(channel.getVideos());
-        channelRepository.save(newChannel);
-    }
-
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Canal borrado",
-                    content = {@Content(schema = @Schema())}),
-    })
-    @Operation(summary = "Delete a Channel by Id", description = "Delete a Channel object by specifying its Id", tags = {"channels", "delete"})
-    @DeleteMapping("/channels/{channelId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteChannel(@Parameter(description = "id of channel to be deleted") @PathVariable("channelId") String channelId) {
-        if (channelRepository.existsById(channelId)) {
-            channelRepository.deleteById(channelId);
-        }
-    }
 }

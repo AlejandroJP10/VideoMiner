@@ -12,7 +12,7 @@ import java.util.List;
  * @author Juan C. Alonso
  */
 @Entity
-@Table(name = "ChannelController")
+@Table(name = "channels")
 public class Channel {
 
     @Id
@@ -20,7 +20,7 @@ public class Channel {
     private String id;
 
     @JsonProperty("name")
-    @NotEmpty(message = "ChannelController name cannot be empty")
+    @NotEmpty(message = "Channel name cannot be empty")
     private String name;
 
     @JsonProperty("description")
@@ -28,13 +28,13 @@ public class Channel {
     private String description;
 
     @JsonProperty("createdTime")
-    @NotEmpty(message = "ChannelController creation time cannot be empty")
+    @NotEmpty(message = "Channel creation time cannot be empty")
     private String createdTime;
 
     @JsonProperty("videos")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "channelId")
-    @NotNull(message = "ChannelController videos cannot be null")
+    @NotNull(message = "Channel videos cannot be null")
     private List<Video> videos;
 
     public Channel() {
@@ -83,7 +83,7 @@ public class Channel {
 
     @Override
     public String toString() {
-        return "ChannelController{" +
+        return "Channel{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +

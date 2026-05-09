@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/videominer/pom.xml" />
         <option value="$PROJECT_DIR$/peertubeminer/pom.xml" />
         <option value="$PROJECT_DIR$/dailymotionminer/pom.xml" />
+        <option value="$PROJECT_DIR$/youtubeminer/pom.xml" />
       </list>
     </option>
   </component>

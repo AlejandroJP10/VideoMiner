@@ -11,7 +11,7 @@ import java.util.List;
  * @author Juan C. Alonso
  */
 @Entity
-@Table(name = "Video")
+@Table(name = "videos")
 public class Video {
 
     @Id
@@ -29,20 +29,21 @@ public class Video {
 
     @JsonProperty("releaseTime")
     @Column(name="releaseTime")
-    @NotEmpty(message = "Video release time cannot be empty")
+    @NotEmpty(message = "Video release time can not be empty")
     private String releaseTime;
 
     @JsonProperty("user")
-    @OneToOne(cascade = CascadeType.ALL)
+    @NotNull(message = "Video author can not be null")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private User author;
 
     @JsonProperty("comments")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "videoId")
     private List<Comment> comments;
 
     @JsonProperty("captions")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "videoId")
     private List<Caption> captions;
 
