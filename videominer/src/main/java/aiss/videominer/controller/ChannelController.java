@@ -64,5 +64,16 @@ public class ChannelController {
     public Channel createChannel(@Parameter(description = "data of channel to be created") @RequestBody @Valid Channel channel) {
         return channelRepository.save(channel);
     }
-
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Canal borrado",
+                    content = {@Content(schema = @Schema())}),
+    })
+    @Operation(summary = "Delete a Channel by Id", description = "Delete a Channel object by specifying its Id", tags = {"channels", "delete"})
+    @DeleteMapping("/channels/{channelId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteChannel(@Parameter(description = "id of channel to be deleted") @PathVariable("channelId") String channelId) {
+        if (channelRepository.existsById(channelId)) {
+            channelRepository.deleteById(channelId);
+        }
+    }
 }
