@@ -1,6 +1,7 @@
 package aiss.dailymotionminer.model.videominer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -11,38 +12,46 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Video")
+@Schema(description = "Vídeo extraído de Dailymotion")
 public class Video {
 
     @Id
     @JsonProperty("id")
+    @Schema(description = "ID único del vídeo", example = "x8m9v2")
     private String id;
 
     @JsonProperty("name")
     @Column(name="name")
     @NotEmpty(message = "Video name cannot be empty")
+    @Schema(description = "Título del vídeo", example = "Entrevista exclusiva")
     private String name;
 
     @JsonProperty("description")
     @Column(columnDefinition="TEXT", name="description")
+    @Schema(description = "Descripción detallada del contenido")
     private String description;
 
     @JsonProperty("releaseTime")
     @Column(name="releaseTime")
     @NotEmpty(message = "Video release time cannot be empty")
+    @Schema(description = "Fecha de publicación", example = "2023-10-15")
     private String releaseTime;
 
     @JsonProperty("user")
     @OneToOne(cascade = CascadeType.ALL)
+    @Schema(description = "Usuario que subió el vídeo")
     private User author;
 
     @JsonProperty("comments")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "videoId")
+    @Schema(description = "Lista de comentarios (extraídos de los tags de Dailymotion)")
     private List<Comment> comments;
 
     @JsonProperty("captions")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "videoId")
+    @Schema(description = "Lista de subtítulos disponibles")
     private List<Caption> captions;
 
     public String getId() {

@@ -14,10 +14,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Dailymotion Miner", description="Controlador para la extracción de datos desde Dailymotion hacia VideoMiner")
 @RestController
 @RequestMapping("/dailymotionminer/channels")
 public class DailymotionController {
@@ -49,11 +56,26 @@ public class DailymotionController {
         return buildChannel(id, nVideos, nPages);
     }
 
+    @Operation(
+            summary= "Extraer y transformar canal de Dailymotion",
+            description= "Obtiene la información de un canal, sus vídeos, etiquetas (a falta de comentarios) y subtítulos, los transforma al formato de VideoMiner y los envía al servicio central.",
+            tags= {"post"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Canal procesado y enviado con éxito",
+            content= @Content(schema = @Schema(implementation = Channel.class))),
+            @ApiResponse(responseCode = "404", description = "No se encontró el canal en Dailymotion"),
+            @ApiResponse(responseCode = "502", description = "Error al conectar con Dailymotion o VideoMiner")
+    })
+
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Channel createChannel(
+            @Parameter(description = "ID del usuario o canal en Dailymotion", required = true, example = "x160jw6")
             @PathVariable String id,
+            @Parameter(description = "Máximo de vídeos a importar")
             @RequestParam(required = false) Integer maxVideos,
+            @Parameter(description = "Máximo de páginas de comentarios/subtítulos a procesar")
             @RequestParam(required = false) Integer maxPages) {
 
         int nVideos = (maxVideos != null) ? maxVideos : defaultMaxVideos;

@@ -1,6 +1,7 @@
 package aiss.dailymotionminer.model.videominer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 /**
@@ -8,6 +9,7 @@ import jakarta.persistence.*;
  */
 @Entity
 @Table(name = "VMUser")
+@Schema(description = "Usuario/Autor del vídeo")
 public class User {
 
     @Id
@@ -16,14 +18,17 @@ public class User {
     private Long id;
 
     @Column(name="name")
+    @Schema(description = "Nombre del usuario", example = "User123")
     @JsonProperty("name")
     private String name;
 
     @Column(name="user_link")
+    @Schema(description = "Enlace al perfil del usuario")
     @JsonProperty("user_link")
     private String user_link;
 
     @Column(name="picture_link")
+    @Schema(description = "Enlace al avatar del usuario")
     @JsonProperty("picture_link")
     private String picture_link;
 
